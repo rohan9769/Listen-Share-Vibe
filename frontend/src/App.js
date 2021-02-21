@@ -1,25 +1,38 @@
-import logo from './logo.svg';
+import React , { Component } from 'react';
+import axios from 'axios'
 import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends Component{
+
+  state = {
+    host : []
+  }
+
+  componentDidMount(){
+    let data
+
+    axios.get(' http://127.0.0.1:8000/api/home/')
+    .then((response) =>{
+      data = response.data
+      this.setState({host:data})
+    })
+    .catch((error)=>{
+    })
+
+    
+  }
+
+  render(){
+    return(
+      <>
+        <div>
+          {this.state.host.map(
+            (host,id) =>(<div key={id}><h1>The host is {host.host}</h1></div>)
+          )}
+        </div>
+      </>
+    )
+  }
 }
 
-export default App;
+export default App
